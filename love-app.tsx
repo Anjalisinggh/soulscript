@@ -583,11 +583,11 @@ export default function LoveApp() {
                 animation: `float 3s ease-in-out infinite`,
               }}
             >
-              💕
+              🤍❤️
             </div>
           ))}
         </div>
-        <h2 className="text-5xl font-bold text-pink-600 mb-2 font-script">Just for You, Lovebug🐞 </h2>
+        <h2 className="text-5xl font-bold text-pink-600 mb-2 font-script">Just for You, My Love❤️‍🩹 </h2>
         <p className="text-xl text-pink-400 font-serif">A little something to show how much you mean to me</p>
       </div>
 
