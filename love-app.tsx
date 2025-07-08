@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Heart, Calendar, Gift, Star, Sparkles } from "lucide-react"
+import { Heart, Calendar, Gift, Star, Menu, X } from "lucide-react"
 
 const dateIdeas = [
   {
@@ -512,7 +512,7 @@ const loveNotes = [
   "You're not just my love, you're my everything 💖",
 ]
 
-type CuteSticker = { type: string; src?: string; alt?: string; content?: string };
+type CuteSticker = { type: string; src?: string; alt?: string; content?: string }
 
 const cuteStickers: CuteSticker[] = [
   { type: "image", src: "/img1.jpg", alt: "Cute sticker 1" },
@@ -533,7 +533,6 @@ const cuteStickers: CuteSticker[] = [
   { type: "image", src: "/img16.jpg", alt: "Sweet sticker" },
   { type: "image", src: "/img17.jpg", alt: "Romantic sticker" },
   { type: "image", src: "/img18.jpg", alt: "Cute sticker" },
-  
 ]
 
 export default function LoveApp() {
@@ -543,6 +542,7 @@ export default function LoveApp() {
   >([])
   const [loveMessage, setLoveMessage] = useState("")
   const [floatingHearts, setFloatingHearts] = useState<Array<{ id: number; x: number; y: number }>>([])
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -555,7 +555,6 @@ export default function LoveApp() {
         },
       ])
     }, 2000)
-
     return () => clearInterval(interval)
   }, [])
 
@@ -569,170 +568,180 @@ export default function LoveApp() {
   }
 
   const renderHome = () => (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
-      <div className="text-center relative">
+      <div className="text-center relative px-4">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {floatingHearts.map((heart) => (
             <div
               key={heart.id}
-              className="absolute text-pink-300 text-2xl animate-bounce"
+              className="absolute text-pink-300 text-xl sm:text-2xl animate-bounce"
               style={{
                 left: `${heart.x}%`,
                 top: `${heart.y}%`,
                 animation: `float 3s ease-in-out infinite`,
               }}
             >
-              🤍❤️
+              <Heart className="w-6 h-6 sm:w-8 sm:h-8" />
             </div>
           ))}
         </div>
-        <h2 className="text-5xl font-bold text-pink-600 mb-2 font-script">Just for You, My Love❤️‍🩹 </h2>
-        <p className="text-xl text-pink-400 font-serif">A little something to show how much you mean to me</p>
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-pink-600 mb-2 font-dancing-script">
+          Just for You, My Love❤️‍🩹
+        </h2>
+        <p className="text-lg sm:text-xl text-pink-400 font-playfair-display">
+          A little something to show how much you mean to me
+        </p>
       </div>
 
       {/* Quick Actions */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 px-4">
         <Card
           className="bg-gradient-to-br from-pink-50 to-rose-50 border-pink-200 hover:shadow-lg transition-all duration-300 cursor-pointer"
           onClick={() => setCurrentSection("dates")}
         >
-          <CardContent className="p-6 text-center">
-            <Calendar className="w-12 h-12 text-pink-500 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold text-pink-700 mb-2 font-script">Date Ideas</h3>
-            <p className="text-pink-600 font-sans">Cute adventures for us to share together</p>
+          <CardContent className="p-4 sm:p-6 text-center">
+            <Calendar className="w-10 h-10 sm:w-12 sm:h-12 text-pink-500 mx-auto mb-3 sm:mb-4" />
+            <h3 className="text-xl sm:text-2xl font-semibold text-pink-700 mb-2 font-dancing-script">Date Ideas</h3>
+            <p className="text-sm sm:text-base text-pink-600 font-inter">Cute adventures for us to share together</p>
           </CardContent>
         </Card>
-
         <Card
           className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 hover:shadow-lg transition-all duration-300 cursor-pointer"
           onClick={() => setCurrentSection("love-notes")}
         >
-          <CardContent className="p-6 text-center">
-            <Heart className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold text-purple-700 mb-2 font-script">Love Notes</h3>
-            <p className="text-purple-600 font-sans">Sweet messages from my heart to yours</p>
+          <CardContent className="p-4 sm:p-6 text-center">
+            <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-purple-500 mx-auto mb-3 sm:mb-4" />
+            <h3 className="text-xl sm:text-2xl font-semibold text-purple-700 mb-2 font-dancing-script">Love Notes</h3>
+            <p className="text-sm sm:text-base text-purple-600 font-inter">Sweet messages from my heart to yours</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Daily Love Message */}
-      <Card className="bg-gradient-to-r from-pink-100 via-purple-50 to-blue-50 border-pink-200">
-        <CardHeader>
-<CardTitle className="text-pink-700 flex items-center gap-2 font-script text-2xl">
-  <Heart className="w-6 h-6" />
-             A Whisper from My Heart 🫶
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center p-6 bg-white/50 rounded-lg">
-            <p className="text-xl text-gray-700 mb-4 italic font-serif leading-relaxed">
-              {loveMessage || "Tap the button for a little love magic! 💖"}
-            </p>
-            <Button onClick={getRandomLoveNote} className="bg-pink-500 hover:bg-pink-600 font-sans text-lg px-6 py-3">
-              <Heart className="w-5 h-5 mr-2" />
-              Click here for a heartwarming surprise! 🧸
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="px-4">
+        <Card className="bg-gradient-to-r from-pink-100 via-purple-50 to-blue-50 border-pink-200">
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-pink-700 flex items-center gap-2 font-dancing-script text-xl sm:text-2xl">
+              <Heart className="w-5 h-5 sm:w-6 sm:h-6" />A Whisper from My Heart 🫶
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center p-4 sm:p-6 bg-white/50 rounded-lg">
+              <p className="text-lg sm:text-xl text-gray-700 mb-4 italic font-playfair-display leading-relaxed">
+                {loveMessage || "Tap the button for a little love magic! 💖"}
+              </p>
+              <Button
+                onClick={getRandomLoveNote}
+                className="bg-pink-500 hover:bg-pink-600 font-inter text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 w-full sm:w-auto"
+              >
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Click here for a heartwarming surprise! 🧸
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Sticker Collection */}
-      <Card className="bg-gradient-to-br from-yellow-50 to-pink-50 border-yellow-200">
-        <CardHeader>
-          <CardTitle className="text-yellow-700 flex items-center gap-2 font-script text-2xl">
-            <Star className="w-6 h-6" />
-            Cute Stickers for You
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-6 gap-5 mb-6">
-            {cuteStickers.map((sticker, index) => (
-              <button
-                key={index}
-                onClick={() => addSticker(sticker)}
-                className="p-3 hover:bg-white/50 rounded-xl transition-all duration-300 hover:scale-110 hover:shadow-lg"
-              >
-                {sticker.type === "image" ? (
-                  <img
-                    src={sticker.src || "/placeholder.svg"}
-                    alt={sticker.alt}
-                    className="w-23 h-23 object-contain rounded-lg"
-                    onError={(e) => {
-                      e.currentTarget.src = "/placeholder.svg?height=64&width=64"
-                    }}
-                  />
-                ) : (
-                  <span className="text-4xl">{sticker.content ?? ""}</span>
-                )}
-              </button>
-            ))}
-          </div>
-          {selectedStickers.length > 0 && (
-            <div className="bg-white/50 p-6 rounded-lg">
-              <p className="text-l text-gray-600 mb-3 font-sans">Your sticker collection:</p>
-              <div className="flex flex-wrap gap-2">
-                {selectedStickers.map((sticker, index) => (
-                  <span key={index} className="text-2xl">
-                    {sticker.type === "image" ? (
-                      <img
-                        src={sticker.src || "/placeholder.svg"}
-                        alt={sticker.alt}
-                        className="w-10 h-10 object-contain rounded inline-block"
-                        onError={(e) => {
-                          e.currentTarget.src = "/placeholder.svg?height=40&width=40"
-                        }}
-                      />
-                    ) : (
-                      sticker.content
-                    )}
-                  </span>
-                ))}
-              </div>
+      <div className="px-4">
+        <Card className="bg-gradient-to-br from-yellow-50 to-pink-50 border-yellow-200">
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-yellow-700 flex items-center gap-2 font-dancing-script text-xl sm:text-2xl">
+              <Star className="w-5 h-5 sm:w-6 sm:h-6" />
+              Cute Stickers for You
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 mb-4 sm:mb-6">
+              {cuteStickers.map((sticker, index) => (
+                <button
+                  key={index}
+                  onClick={() => addSticker(sticker)}
+                  className="p-2 sm:p-3 hover:bg-white/50 rounded-xl transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                >
+                  {sticker.type === "image" ? (
+                    <img
+                      src={sticker.src || "/placeholder.svg"}
+                      alt={sticker.alt}
+                      className="w-16 h-16 sm:w-20 sm:h-20 md:w-23 md:h-23 object-contain rounded-lg"
+                      onError={(e) => {
+                        e.currentTarget.src = "/placeholder.svg?height=64&width=64"
+                      }}
+                    />
+                  ) : (
+                    <span className="text-3xl sm:text-4xl">{sticker.content ?? ""}</span>
+                  )}
+                </button>
+              ))}
             </div>
-          )}
-        </CardContent>
-      </Card>
+            {selectedStickers.length > 0 && (
+              <div className="bg-white/50 p-4 sm:p-6 rounded-lg">
+                <p className="text-sm sm:text-base text-gray-600 mb-3 font-inter">Your sticker collection:</p>
+                <div className="flex flex-wrap gap-2">
+                  {selectedStickers.map((sticker, index) => (
+                    <span key={index} className="text-xl sm:text-2xl">
+                      {sticker.type === "image" ? (
+                        <img
+                          src={sticker.src || "/placeholder.svg"}
+                          alt={sticker.alt}
+                          className="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-xl inline-block gap-3 sm:gap-4 mb-4 sm:mb-6"
+                          onError={(e) => {
+                            e.currentTarget.src = "/placeholder.svg?height=40&width=40"
+                          }}
+                        />
+                      ) : (
+                        sticker.content
+                      )}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 
   const renderDateIdeas = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-4xl font-bold text-pink-500 font-script">Date Ideas 🥹</h2>
+    <div className="space-y-4 sm:space-y-6 px-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <h2 className="text-3xl sm:text-4xl font-bold text-pink-500 font-dancing-script">Date Ideas 🥹</h2>
         <Button
           onClick={() => setCurrentSection("home")}
           variant="outline"
-          className="border-pink-300 text-pink-600 font-sans"
+          className="border-pink-300 text-pink-600 font-inter w-full sm:w-auto"
         >
           Back Home
         </Button>
       </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         {dateIdeas.map((idea) => (
           <Card
             key={idea.id}
             className="bg-gradient-to-br from-white to-pink-50 border-pink-200 hover:shadow-lg transition-all duration-300"
           >
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-pink-700 flex items-center gap-2 font-script text-xl">
-                  <span className="text-2xl">{idea.icon}</span>
+            <CardHeader className="pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <CardTitle className="text-pink-700 flex items-center gap-2 font-dancing-script text-lg sm:text-xl">
+                  <span className="text-xl sm:text-2xl">{idea.icon}</span>
                   {idea.title}
                 </CardTitle>
-                <Badge className="bg-pink-100 text-pink-700 font-sans">{idea.category}</Badge>
+                <Badge className="bg-pink-100 text-pink-700 font-inter text-xs sm:text-sm self-start sm:self-center">
+                  {idea.category}
+                </Badge>
               </div>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-gray-600 mb-4 text-base font-sans leading-relaxed">
+              <CardDescription className="text-gray-600 mb-4 text-sm sm:text-base font-inter leading-relaxed">
                 {idea.description}
               </CardDescription>
               <div className="flex gap-2 flex-wrap">
-                <Badge variant="outline" className="border-purple-300 text-purple-600 font-sans">
+                <Badge variant="outline" className="border-purple-300 text-purple-600 font-inter text-xs">
                   {idea.time}
                 </Badge>
-                <Badge variant="outline" className="border-green-300 text-green-600 font-sans">
+                <Badge variant="outline" className="border-green-300 text-green-600 font-inter text-xs">
                   {idea.cost}
                 </Badge>
               </div>
@@ -744,43 +753,45 @@ export default function LoveApp() {
   )
 
   const renderLoveNotes = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-4xl font-bold text-purple-400 font-script">Love Notes 🤍</h2>
+    <div className="space-y-4 sm:space-y-6 px-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <h2 className="text-3xl sm:text-4xl font-bold text-purple-400 font-dancing-script">Love Notes 🤍</h2>
         <Button
           onClick={() => setCurrentSection("home")}
           variant="outline"
-          className="border-purple-300 text-purple-600 font-sans"
+          className="border-purple-300 text-purple-600 font-inter w-full sm:w-auto"
         >
           Back Home
         </Button>
       </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         {loveNotes.map((note, index) => (
           <Card
             key={index}
             className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 hover:shadow-lg transition-all duration-300"
           >
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="text-center">
-                <h3 className="text-2xl font-sans text-purple-700 mb-2 font-script">A little message just for you </h3>
-              
-                <div className="flex justify-start mb-4">
-                  <Heart className="w-8 h-8 text-pink-500" />
-                 
-                <p className="text-lg text-gray-700 italic leading-relaxed font-serif">{note}</p>
+                <h3 className="text-lg sm:text-xl text-purple-700 mb-3 font-dancing-script">
+                  A little message just for you
+                </h3>
+                <div className="flex justify-center mb-4">
+                  <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-pink-500" />
+                </div>
+                <p className="text-base sm:text-lg text-gray-700 italic leading-relaxed font-playfair-display">
+                  {note}
+                </p>
               </div>
-               </div>
             </CardContent>
           </Card>
         ))}
       </div>
-
       <Card className="bg-gradient-to-r from-pink-100 to-purple-100 border-pink-200">
-        <CardContent className="p-8 text-center">
-          <h3 className="text-3xl font-bold text-pink-700 mb-4 font-script">You Are My Everything 🤍</h3>
-          <p className="text-xl text-gray-700 leading-relaxed font-serif">
+        <CardContent className="p-6 sm:p-8 text-center">
+          <h3 className="text-2xl sm:text-3xl font-bold text-pink-700 mb-4 font-dancing-script">
+            You Are My Everything 🤍
+          </h3>
+          <p className="text-lg sm:text-xl text-gray-700 leading-relaxed font-playfair-display">
             Every single day with you is a gift. Thank you for being the most amazing, sweet, and pure soul in my life.
             You make everything better just by being you. I love you more than words can express! 🥹
           </p>
@@ -791,21 +802,21 @@ export default function LoveApp() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-50">
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-7xl mx-auto p-3 sm:p-6">
         {/* Navigation */}
-        <div className="flex justify-center mb-8">
-          <div className="flex gap-2 bg-white/50 backdrop-blur-sm rounded-full p-2">
+        <div className="flex justify-center mb-6 sm:mb-8">
+          {/* Desktop Navigation */}
+          <div className="hidden sm:flex gap-2 bg-white/50 backdrop-blur-sm rounded-full p-2">
             {/* Soul Script Branding */}
-            <div className="flex items-center px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-semibold font-script text-lg">
+            <div className="flex items-center px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-semibold font-dancing-script text-lg">
               <Heart className="w-5 h-5 mr-2 fill-current" />
               Soul Script
             </div>
-
             {/* Navigation Buttons */}
             <Button
               onClick={() => setCurrentSection("home")}
               variant={currentSection === "home" ? "default" : "ghost"}
-              className={`font-sans ${currentSection === "home" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
+              className={`font-inter ${currentSection === "home" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
             >
               <Heart className="w-4 h-4 mr-2" />
               Home
@@ -813,7 +824,7 @@ export default function LoveApp() {
             <Button
               onClick={() => setCurrentSection("dates")}
               variant={currentSection === "dates" ? "default" : "ghost"}
-              className={`font-sans ${currentSection === "dates" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
+              className={`font-inter ${currentSection === "dates" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
             >
               <Calendar className="w-4 h-4 mr-2" />
               Dates
@@ -821,11 +832,68 @@ export default function LoveApp() {
             <Button
               onClick={() => setCurrentSection("love-notes")}
               variant={currentSection === "love-notes" ? "default" : "ghost"}
-              className={`font-sans ${currentSection === "love-notes" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
+              className={`font-inter ${currentSection === "love-notes" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
             >
               <Gift className="w-4 h-4 mr-2" />
               Love Notes
             </Button>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="sm:hidden w-full">
+            <div className="flex items-center justify-between bg-white/50 backdrop-blur-sm rounded-full p-2">
+              <div className="flex items-center px-3 py-2 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full text-white font-semibold font-dancing-script text-sm">
+                <Heart className="w-4 h-4 mr-1 fill-current" />
+                Soul Script
+              </div>
+              <Button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                variant="ghost"
+                size="sm"
+                className="hover:bg-white/50"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </Button>
+            </div>
+
+            {/* Mobile Menu Dropdown */}
+            {mobileMenuOpen && (
+              <div className="mt-2 bg-white/90 backdrop-blur-sm rounded-lg p-2 space-y-1">
+                <Button
+                  onClick={() => {
+                    setCurrentSection("home")
+                    setMobileMenuOpen(false)
+                  }}
+                  variant={currentSection === "home" ? "default" : "ghost"}
+                  className={`w-full justify-start font-inter ${currentSection === "home" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
+                >
+                  <Heart className="w-4 h-4 mr-2" />
+                  Home
+                </Button>
+                <Button
+                  onClick={() => {
+                    setCurrentSection("dates")
+                    setMobileMenuOpen(false)
+                  }}
+                  variant={currentSection === "dates" ? "default" : "ghost"}
+                  className={`w-full justify-start font-inter ${currentSection === "dates" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Dates
+                </Button>
+                <Button
+                  onClick={() => {
+                    setCurrentSection("love-notes")
+                    setMobileMenuOpen(false)
+                  }}
+                  variant={currentSection === "love-notes" ? "default" : "ghost"}
+                  className={`w-full justify-start font-inter ${currentSection === "love-notes" ? "bg-pink-500 hover:bg-pink-600" : "hover:bg-white/50"}`}
+                >
+                  <Gift className="w-4 h-4 mr-2" />
+                  Love Notes
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -834,29 +902,6 @@ export default function LoveApp() {
         {currentSection === "dates" && renderDateIdeas()}
         {currentSection === "love-notes" && renderLoveNotes()}
       </div>
-
-      {/* Custom Fonts and Floating Animation Styles */}
-      <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        .font-script {
-          font-family: 'Dancing Script', cursive;
-        }
-        
-        .font-serif {
-          font-family: 'Playfair Display', serif;
-        }
-        
-        .font-sans {
-          font-family: 'Inter', sans-serif;
-        }
-        
-        @keyframes float {
-          0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
-          50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
-          100% { transform: translateY(-40px) rotate(360deg); opacity: 0; }
-        }
-      `}</style>
     </div>
   )
 }
