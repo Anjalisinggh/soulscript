@@ -8,7 +8,7 @@ export default function Page() {
       <LoveApp />
 
       <footer className="text-center text-gray-500 mt-10"  >
-        <p>Dreamt under moonlight & built with stardust by{"  "}
+        <p>A love letter written in stars & moonlight by {"  "}
           <a
             href="https://github.com/Anjalisinggh/soulscript"
             target="_blank"

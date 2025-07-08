@@ -636,7 +636,7 @@ export default function LoveApp() {
                 className="bg-pink-500 hover:bg-pink-600 font-inter text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 w-full sm:w-auto"
               >
                 <Heart className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Click here for a heartwarming surprise! 🧸
+                Click for Bliss!
               </Button>
             </div>
           </CardContent>
