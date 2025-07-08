@@ -7,15 +7,15 @@ export default function Page() {
     <div>
       <LoveApp />
 
-      <footer className="text-center text-gray-500 mt-10">
-        <p>Dreamt under moonlight & built with stardust by{" "}
+      <footer className="text-center text-gray-500 mt-10"  >
+        <p>Dreamt under moonlight & built with stardust by{"  "}
           <a
             href="https://github.com/Anjalisinggh/soulscript"
             target="_blank"
             rel="noopener noreferrer"
             className="text-purple-500 hover:underline"
           >
-            Anjali
+            Anjali🤍
           </a>
         </p>
       </footer>
